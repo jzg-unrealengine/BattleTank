@@ -7,7 +7,9 @@ void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	UE_LOG(LogTemp, Warning, TEXT("TankPlayerController c++ class BeginPlay override!"))
+	ATank* Controlled = GetControlledTank();
+	if (Controlled)
+		UE_LOG(LogTemp, Warning, TEXT("Possessed tank: %s"), *Controlled->GetName());
 }
 
 ATank* ATankPlayerController::GetControlledTank() const
