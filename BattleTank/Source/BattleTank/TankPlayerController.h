@@ -2,10 +2,11 @@
 
 #pragma once
 
-#include "Tank.h"
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h"
+
+class ATank;
 
 /**
  * 
@@ -37,5 +38,5 @@ private:
 	void AimTowardsCrossahair() const;
 	bool GetSightRayHitLocation(FVector&) const;
 	bool GetLookVectorHitLocation(FVector, FVector&) const;
-	
+
 };
