@@ -49,7 +49,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		MoveBarrelTowards(AimDirection);
 		MoveTurretTowards(AimDirection);
 	}
-
+	//TODO else elevate & rotate towards crosshair
 
 	//auto BarrelLocation = Barrel->GetComponentLocation();
 	//UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s from %s"), *GetOwner()->GetName(), *HitLocation.ToString(), *BarrelLocation.ToString());
@@ -69,6 +69,16 @@ void UTankAimingComponent::MoveTurretTowards(FVector AimDirection)
 	FRotator TurretRotator = Turret->GetForwardVector().Rotation();
 	FRotator AimAsRotator = AimDirection.Rotation();
 	FRotator DeltaRotator = AimAsRotator - TurretRotator;
+
+	while (DeltaRotator.Yaw < -180)
+	{
+		DeltaRotator.Yaw += 360;
+	}
+
+	while (DeltaRotator.Yaw > 180)
+	{
+		DeltaRotator.Yaw -= 360;
+	}
 
 	Turret->Rotate(DeltaRotator.Yaw);
 }

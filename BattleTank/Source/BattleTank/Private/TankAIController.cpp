@@ -11,8 +11,8 @@ void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	ControlledTank = GetControlledTank();
-	AimTarget = GetPlayerTank();
+	ControlledTank = Cast<ATank>(GetPawn());
+	AimTarget = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 	if (ControlledTank && !AimTarget)
 	{
 		UE_LOG(LogTemp, Error, TEXT("No target for AI tank %s!"), *ControlledTank->GetName());
@@ -24,22 +24,11 @@ void ATankAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	AimTowardsPlayer();
-}
+	if (AimTarget && ControlledTank)
+	{
+		ControlledTank->AimAt(AimTarget->GetActorLocation());
 
-ATank* ATankAIController::GetControlledTank() const
-{
-	return Cast<ATank>(GetPawn());
-}
-
-ATank* ATankAIController::GetPlayerTank() const
-{
-	return Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
-}
-
-void ATankAIController::AimTowardsPlayer() const
-{
-	if (!AimTarget || !ControlledTank) return;
-
-	ControlledTank->AimAt(AimTarget->GetActorLocation());
+		//TODO Inspect that target is already being aimed at (don't waste ammo shooting in clearly wrong direction)
+		ControlledTank->Fire();
+	}
 }
