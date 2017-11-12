@@ -20,6 +20,8 @@ private:
 	ATank* ControlledTank;
 	ATank* AimTarget;
 
+	UPROPERTY(EditDefaultsOnly)
+	float AcceptanceRadius = 3000;
 
 	virtual void BeginPlay() override;
 

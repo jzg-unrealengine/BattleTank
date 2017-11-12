@@ -26,6 +26,8 @@ void ATankAIController::Tick(float DeltaTime)
 
 	if (AimTarget && ControlledTank)
 	{
+		MoveToActor(AimTarget, AcceptanceRadius);
+
 		ControlledTank->AimAt(AimTarget->GetActorLocation());
 
 		//TODO Inspect that target is already being aimed at (don't waste ammo shooting in clearly wrong direction)
