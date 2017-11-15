@@ -28,14 +28,14 @@ public:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	void SetBarrelReference(UTankBarrel* BarrelToSet);
-	void SetTurretReference(UTankTurret* TurretToSet);
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	void Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
 	void AimAt(FVector HitLocation, float LaunchSpeed);
 	
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
-	EFiringStatus FiringStatus = EFiringStatus::Reloading;
+	EFiringStatus FiringStatus = EFiringStatus::Aiming;
 
 private:
 	UTankBarrel* Barrel = nullptr;
