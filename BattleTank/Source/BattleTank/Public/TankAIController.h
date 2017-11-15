@@ -5,7 +5,6 @@
 #include "AIController.h"
 #include "TankAIController.generated.h"
 
-class ATank;
 
 /**
  * 
@@ -17,9 +16,6 @@ class BATTLETANK_API ATankAIController : public AAIController
 	
 
 private:
-	ATank* ControlledTank;
-	ATank* AimTarget;
-
 	UPROPERTY(EditDefaultsOnly)
 	float AcceptanceRadius = 3000;
 

@@ -2,7 +2,7 @@
 
 #include "TankAIController.h"
 #include "BattleTank.h"
-#include "Tank.h"
+#include "TankAimingComponent.h"
 #include "Engine/World.h"
 
 
@@ -11,8 +11,8 @@ void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	ControlledTank = Cast<ATank>(GetPawn());
-	AimTarget = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
+	auto ControlledTank = GetPawn();
+	auto AimTarget = GetWorld()->GetFirstPlayerController()->GetPawn();
 	if (ControlledTank && !AimTarget)
 	{
 		UE_LOG(LogTemp, Error, TEXT("No target for AI tank %s!"), *ControlledTank->GetName());
@@ -24,13 +24,17 @@ void ATankAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	auto ControlledTank = GetPawn();
+	auto AimTarget = GetWorld()->GetFirstPlayerController()->GetPawn();
+
 	if (AimTarget && ControlledTank)
 	{
 		MoveToActor(AimTarget, AcceptanceRadius);
 
-		ControlledTank->AimAt(AimTarget->GetActorLocation());
+		auto AimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
+		AimingComponent->AimAt(AimTarget->GetActorLocation());
 
-		//TODO Inspect that target is already being aimed at (don't waste ammo shooting in clearly wrong direction)
-		ControlledTank->Fire();
+		//TODO Inspect that target is locked
+		AimingComponent->Fire();
 	}
 }

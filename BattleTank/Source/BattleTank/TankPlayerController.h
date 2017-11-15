@@ -2,11 +2,9 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h"
 
-class ATank;
 
 /**
  * 
@@ -24,8 +22,6 @@ protected:
 	void FoundAimingComponent(UTankAimingComponent* AimCompRef);
 	
 private:
-	ATank* ControlledTank;
-
 	UPROPERTY(EditDefaultsOnly)
 	float CrosshairXLocation = 0.5f;
 
