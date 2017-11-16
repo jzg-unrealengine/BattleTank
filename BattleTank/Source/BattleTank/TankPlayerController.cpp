@@ -9,6 +9,8 @@ void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
+	if (!GetPawn()) return;
+
 	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 
 	if (!AimingComponent)
@@ -30,6 +32,8 @@ void ATankPlayerController::Tick(float DeltaTime)
 
 void ATankPlayerController::AimTowardsCrossahair() const
 {
+	if (!GetPawn()) return;
+
 	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 
 	if (!AimingComponent) return;
