@@ -10,7 +10,8 @@ enum class EFiringStatus : uint8
 {
 	Reloading,
 	Aiming,
-	Locked
+	Locked,
+	OutOfAmmo
 };
 
 class AProjectile;
@@ -37,9 +38,16 @@ public:
 	
 	void AimAt(FVector HitLocation);
 
+	UFUNCTION(BlueprintCallable, Category = "State")
+	EFiringStatus GetFiringStatus() const;
+
+	UFUNCTION(BlueprintCallable, Category = "State")
+	int32 GetAmmoRemaining() const;
+
 protected:
-	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringStatus FiringStatus = EFiringStatus::Reloading;
+
+	int32 AmmoRemaining = 99;
 
 private:
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
