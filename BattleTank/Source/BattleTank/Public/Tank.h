@@ -5,6 +5,7 @@
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTankEvent);
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -17,7 +18,11 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Health")
 	float GetHealthPct() const;
 
+	FTankEvent OnTankDeath;
+
 private:
+	virtual void BeginPlay() override;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	int32 TankMaxHealth = 100;
 
