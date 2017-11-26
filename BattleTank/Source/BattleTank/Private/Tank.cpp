@@ -10,4 +10,20 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 }
 
+float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser)
+{
+	int32 DamagePoints = FPlatformMath::RoundToInt(Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser));
 
+	int32 DamageToApply = FMath::Clamp<int32>(DamagePoints, 0, CurrentHealth);
+
+	CurrentHealth -= DamageToApply;
+
+	//UE_LOG(LogTemp, Warning, TEXT("Health: %i, Damage dealt: %i"), CurrentHealth, DamageToApply)
+
+	return DamageToApply;
+}
+
+float ATank::GetHealthPct() const
+{
+	return (float)CurrentHealth / (float)TankMaxHealth;
+}
